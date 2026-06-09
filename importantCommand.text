@@ -1,0 +1,113 @@
+# ---------------------------------------------
+# 1️⃣ Execute all tests
+# Runs all tests in the 'tests/' folder using default configuration
+npx playwright test
+
+# ---------------------------------------------
+# 2️⃣ Execute tests in headed mode
+# Opens the browser UI for debugging instead of running headless
+npx playwright test --headed
+
+# ---------------------------------------------
+# 3️⃣ Execute tests in a single browser (Chromium, Firefox, WebKit)
+# Make sure projects are defined in playwright.config.js
+# Chromium
+npx playwright test --project=chromium
+# Firefox
+npx playwright test --project=firefox
+# WebKit (Safari)
+npx playwright test --project=webkit
+
+# ---------------------------------------------
+# 4️⃣ Execute a single test file
+# Runs only the specified test file
+npx playwright test tests/login.spec.js
+
+# ---------------------------------------------
+# 5️⃣ Execute a specific test (by name using grep)
+# Runs only the test whose title matches the given string or regex
+npx playwright test -g "valid login"
+# Multiple tests matching regex
+npx playwright test -g "login|signup"
+
+# ---------------------------------------------
+# 6️⃣ Execute tests by tag (@smoke, @sanity, @regression)
+# Tags are included in test titles for filtering
+npx playwright test -g "@smoke"
+npx playwright test -g "@regression"
+
+# ---------------------------------------------
+# 7️⃣ Execute tests with retries
+# Retries failed tests up to the specified number
+npx playwright test --retries=2
+
+# ---------------------------------------------
+# 8️⃣ Execute tests with specific number of workers (parallel execution)
+# Controls parallelism; default = number of CPU cores
+npx playwright test --workers=4
+
+# ---------------------------------------------
+# 9️⃣ Execute tests with a specific reporter (html, list, json, junit, dot)
+# Generates readable reports for CI/CD or local review
+npx playwright test --reporter=html
+npx playwright test --reporter=list
+npx playwright test --reporter=json
+npx playwright test --reporter=dot
+
+# ---------------------------------------------
+# 10️⃣ Execute tests with trace for debugging
+# Captures trace information (network, DOM snapshots) for failed tests
+npx playwright test --trace on
+# View trace in GUI
+npx playwright show-trace trace.zip
+
+# ---------------------------------------------
+# 11️⃣ Execute tests with environment variable / baseURL override
+# Overrides baseURL or passes any custom environment variable
+BASE_URL=https://qa.example.com npx playwright test
+
+# ---------------------------------------------
+# 12️⃣ Combine multiple options
+# Example: Run only smoke tests on Chromium in headed mode with HTML report
+npx playwright test -g "@smoke" --project=chromium --headed --reporter=html
+
+# ---------------------------------------------
+# 13️⃣ Debug mode
+# Opens Playwright Inspector and pauses on debug() statements
+npx playwright test --debug
+
+# ---------------------------------------------
+# 14️⃣ Show all CLI options
+# Always useful to see available flags and latest options
+npx playwright test --help
+
+# ----------------------------------------------
+# How to run all login Test cases in Docker
+# docker run --rm playwright-tests npx playwright test tests/LoginTest.spec.js
+
+# ----------------------------------------------
+# This will execute all test cases in shards and in parallel container
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=1/2 } ; Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=2/2 } ; Get-Job | Wait-Job | Receive-Job
+
+# --------------------------------------------------
+# Single command to execute all test cases in parallel container in shards in FIREFOX, CHROMIUN, WEBKIT(all PARALLEL)
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=1/2 } ;
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=2/2 } ;
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=firefox --shard=1/2 } ;
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=firefox --shard=2/2 } ;
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=webkit --shard=1/2 } ;
+# Start-Job { docker run --rm pw-login-tests npx playwright test tests/LoginTest.spec.js --project=webkit --shard=2/2 } ;
+# Get-Job | Wait-Job | Receive-Job
+
+# --------------------------------------------------------------------
+# To execute above commands with HTML report after execution--- report will be saved in "playwright-report" folder
+# PowerShell command
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=1/2 --reporter=html } ;
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=chromium --shard=2/2 --reporter=html } ;
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=firefox --shard=1/2 --reporter=html } ;
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=firefox --shard=2/2 --reporter=html } ;
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=webkit --shard=1/2 --reporter=html } ;
+Start-Job { docker run --rm -v ${PWD}/playwright-report:/app/playwright-report pw-login-tests npx playwright test tests/LoginTest.spec.js --project=webkit --shard=2/2 --reporter=html } ;
+Get-Job | Wait-Job | Receive-Job
+
+

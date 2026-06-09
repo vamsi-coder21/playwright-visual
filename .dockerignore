@@ -1,0 +1,9 @@
+node_modules
+playwright-report
+allure-report
+allure-results
+test-results
+.git
+.gitignore
+Dockerfile
+README.md

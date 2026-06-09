@@ -1,0 +1,20 @@
+{
+  "autozone": {
+    "basePath": "/",
+    "us":{
+      "qa1" :"https://www-qa1.autozone.com",
+      "qa2" :"https://www-qa2.autozone.com",
+      "qa3" :"https://www-qa3.autozone.com"
+    },
+    "br": {
+      "qa1": "https://www-qa1.autozone.com.br",
+      "qa2": "https://www-qa2.autozone.com.br",
+      "qa3": "https://www-qa3.autozone.com.br"
+    },
+    "mx": {
+      "qa1": "https://www-qa1.autozone.com.mx",
+      "qa2": "https://www-qa2.autozone.com.mx",
+      "qa3": "https://www-qa3.autozone.com.mx"
+    }
+  }
+}
